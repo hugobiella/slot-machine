@@ -25,9 +25,9 @@ symbol_value = {
 def check_winning(columns, lines, bet, values):
     winnings = 0
     for line in range(lines):
-        symbol = columns[0][line]
+        symbol = columns[0][line]  # sets symbol to be checked per number of lines on the bet
         for column in columns:
-            symbol_to_check = column[line]
+            symbol_to_check = column[line]  # checks symbol slot by slot
             if symbol != symbol_to_check:
                 break
         else:
@@ -65,7 +65,7 @@ def print_machine(columns):
         print()
 
 
-def is_integer(value):
+def is_integer(value):  # integer checking function
     try:
         int(value)
         return True
