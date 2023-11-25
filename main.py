@@ -1,23 +1,22 @@
 import random
 
-MAX_LINES = 3
 MIN_BET = 1
-MAX_BET = 100
+MAX_BET = 100  # max $ that the user can bet
 
 ROWS = 3
 COLS = 3
 
 symbol_count = {  # total of symbols must be > (ROWS*COLS), otherwise, can crash (not enough symbols to fill slots).
-    "\U0001F353": 3,
-    "\U0001F95D": 3,
-    "\U0001F34C": 3,
-    "\U0001F347": 3
+    "\U0001F353": 10,
+    "\U0001F95D": 5,
+    "\U0001F34C": 5,
+    "\U0001F347": 5
 }
 
-symbol_value = {
-    "\U0001F353": 5,
-    "\U0001F95D": 4,
-    "\U0001F34C": 3,
+symbol_value = {  # number that will multiply the bet value
+    "\U0001F353": 10,
+    "\U0001F95D": 7,
+    "\U0001F34C": 5,
     "\U0001F347": 2
 }
 
@@ -40,7 +39,7 @@ def get_spin(rows, cols, symbols):
     for symbol_code, symbol_digit in symbols.items():
         for _ in range(symbol_digit):
             all_symbols.append(symbol_code)
-    #  print("all symbols...\n", all_symbols)  # test
+    #  print(" all symbols... ", all_symbols)  # test
     columns = []
     current_symbols = all_symbols[:]
     for _ in range(cols):
@@ -48,14 +47,14 @@ def get_spin(rows, cols, symbols):
         for _ in range(rows):
             value = random.choice(current_symbols)
             current_symbols.remove(value)
-            #  print("removing...", current_symbols)  # test
+            #  print(" removing... ", current_symbols)  # test
             column.append(value)
         columns.append(column)
     #  print("\n after remove... ", current_symbols)  # test
     return columns
 
 
-def print_machine(columns):
+def print_machine(columns):  # prints the slot-machine
     for row in range(len(columns[0])):
         for i, column in enumerate(columns):
             if i != len(columns) - 1:
@@ -65,7 +64,7 @@ def print_machine(columns):
         print()
 
 
-def is_integer(value):  # integer checking function
+def is_integer(value):  # function that checks if a value is integer
     try:
         int(value)
         return True
@@ -89,10 +88,10 @@ def get_deposit():
 
 def get_lines(amount):
     while True:
-        lines = input(f"Enter the number of lines to bet on (1-{MAX_LINES}): ")
+        lines = input(f"Enter the number of lines to bet on (1-{ROWS}): ")
         if is_integer(lines):
             lines = int(lines)
-            if 1 <= lines <= MAX_LINES:
+            if 1 <= lines <= ROWS:
                 if lines <= amount:
                     break
                 else:
@@ -120,7 +119,7 @@ def get_bet():
 
 
 def spin(balance):
-    lines = get_lines(balance)
+    lines = get_lines(balance)  # gets the lines that will be placed the bets
     while True:
         bet = get_bet()
         total_bet = bet * lines
