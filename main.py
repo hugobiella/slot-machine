@@ -140,6 +140,7 @@ def only_spin(balance, total_bet, lines, bet):
     if total_bet > balance:
         print(f"You do not have enough balance to bet that amount."
               f"\nYour current balance is: ${balance}.")
+        return 0
     else:
         print(f"You are betting ${bet} on {lines} lines.\nTotal bet: ${total_bet}")
         slots = get_spin(ROWS, COLS, symbol_count)
@@ -169,7 +170,7 @@ def main():
             if answer == "q":
                 break
             elif answer == "1":
-                new_balance, total_bet, lines, bet = only_spin(balance, total_bet, lines, bet)
+                new_balance = only_spin(balance, total_bet, lines, bet)
                 balance += new_balance
             else:
                 new_balance, total_bet, lines, bet = spin(balance)
