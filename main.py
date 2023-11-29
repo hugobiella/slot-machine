@@ -133,48 +133,17 @@ def spin(balance):
     print_machine(slots)
     winnings = check_winning(slots, lines, bet, symbol_value)
     print(f"You won ${winnings}!")
-    return winnings - total_bet, total_bet, lines, bet
-
-
-def only_spin(balance, total_bet, lines, bet):
-    if total_bet > balance:
-        print(f"You do not have enough balance to bet that amount."
-              f"\nYour current balance is: ${balance}.")
-        return 0
-    else:
-        print(f"You are betting ${bet} on {lines} lines.\nTotal bet: ${total_bet}")
-        slots = get_spin(ROWS, COLS, symbol_count)
-        print_machine(slots)
-        winnings = check_winning(slots, lines, bet, symbol_value)
-        print(f"You won ${winnings}!")
-        return winnings - total_bet, total_bet, lines, bet
+    return winnings - total_bet
 
 
 def main():
-    flag = 0
-    total_bet = 0
-    lines = 0
-    bet = 0
     balance = get_deposit()
     while True:
         print(f"Current balance is ${balance}")
-        if flag == 0:
-            answer = input("Press enter to place bet (q to quit).")
-            if answer == "q":
-                break
-            new_balance, total_bet, lines, bet = spin(balance)
-            balance += new_balance
-            flag = 1
-        elif flag == 1:
-            answer = input("Press 1 to spin again or enter to place bet (q to quit).")
-            if answer == "q":
-                break
-            elif answer == "1":
-                new_balance = only_spin(balance, total_bet, lines, bet)
-                balance += new_balance
-            else:
-                new_balance, total_bet, lines, bet = spin(balance)
-                balance += new_balance
+        answer = input("Press enter to place bet (q to quit).")
+        if answer == "q":
+            break
+        balance += spin(balance)
     print(f"You left with ${balance}")
 
 
